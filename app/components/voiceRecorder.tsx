@@ -1,11 +1,11 @@
-""
-import React, { useState, useRef } from "react";
+"use client";
+import { useState, useRef } from "react";
 
 interface VoiceRecorderProps {
     onRecordingComplete: (blob: Blob) => void;
 }
 
-const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete }) => {
+export default function VoiceRecorder({ onRecordingComplete }: VoiceRecorderProps) {
     const [recording, setRecording] = useState(false);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
@@ -13,23 +13,17 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete }) =>
     const startRecording = async () => {
         setRecording(true);
         audioChunksRef.current = [];
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorderRef.current = new MediaRecorder(stream);
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorderRef.current = new MediaRecorder(stream);
 
-            mediaRecorderRef.current.ondataavailable = (event: BlobEvent) => {
-                audioChunksRef.current.push(event.data);
-            };
+        mediaRecorderRef.current.ondataavailable = (e) => audioChunksRef.current.push(e.data);
 
-            mediaRecorderRef.current.onstop = () => {
-                const blob = new Blob(audioChunksRef.current, { type: "audio/wav" });
-                onRecordingComplete(blob); // send blob to parent
-            };
+        mediaRecorderRef.current.onstop = () => {
+            const blob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+            onRecordingComplete(blob);
+        };
 
-            mediaRecorderRef.current.start();
-        } catch (err) {
-            console.error("Microphone access denied:", err);
-        }
+        mediaRecorderRef.current.start();
     };
 
     const stopRecording = () => {
@@ -40,25 +34,10 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onRecordingComplete }) =>
     return (
         <div>
             {!recording ? (
-                <button
-                    className="bg-green-600 hover:bg-green-500 px-4 py-2 rounded"
-                    onClick={startRecording}
-                >
-                    Start
-                </button>
-
-
+                <button onClick={startRecording} className="px-6 py-3 font-bold text-white uppercase hover:brightness-110 transition-all cursor-pointer active:scale-95" style={{ backgroundColor: "rgba(102, 102, 102, 0.6)", background: "linear-gradient(135deg, rgba(119,119,119,0.6) 0%, rgba(85,85,85,0.6) 50%, rgba(68,68,68,0.6) 100%)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.5)" }}>Record</button>
             ) : (
-                <button
-                    className="bg-yellow-600 hover:bg-yellow-500 px-4 py-2 rounded"
-                    onClick={stopRecording}
-                >
-                    Pause
-                </button>
-
+                <button onClick={stopRecording} className="px-6 py-3 font-bold text-white uppercase hover:brightness-110 transition-all cursor-pointer active:scale-95" style={{ backgroundColor: "rgba(102, 102, 102, 0.6)", background: "linear-gradient(135deg, rgba(119,119,119,0.6) 0%, rgba(85,85,85,0.6) 50%, rgba(68,68,68,0.6) 100%)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.5)" }}>Stop</button>
             )}
         </div>
     );
-};
-
-export default VoiceRecorder;
+}
