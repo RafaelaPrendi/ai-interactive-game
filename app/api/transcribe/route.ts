@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         const transcription = await elevenlabs.speechToText.convert({
             file,
             modelId: "scribe_v2",
-            tagAudioEvents: true,
+            tagAudioEvents: false,
             languageCode: "eng",
             diarize: false,
         });
