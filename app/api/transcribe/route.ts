@@ -29,8 +29,14 @@ export async function POST(req: NextRequest) {
         });
     } catch (error) {
         console.error("Transcription error:", error);
+        if (error instanceof Error && error.message.includes("quota_exceeded")) {
+            return NextResponse.json(
+                { error: "quota_exceeded" },
+                { status: 500 }
+            );
+        }
         return NextResponse.json(
-            { error: "Failed to transcribe audio" },
+            { error: "Failed to transcribe audio" + (error instanceof Error ? `: ${error.message}` : "") },
             { status: 500 }
         );
     }

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
         // Return default response if no transcript provided
         if (!transcript || transcript.trim() === "") {
             return NextResponse.json({
-                story: "The adventure begins...",
+                story: "Can you please say something? The adventure awaits!",
                 choices: ["Start your journey", "Wait and listen"]
             });
         }
@@ -19,17 +19,19 @@ export async function POST(req: NextRequest) {
     You are the narrator of a fantasy adventure game.
     Keep the paragraphs concise and engaging, and always provide 2-3 clear choices for the player to pick from.
     The story should adapt based on the player's choices and previous story history.
-    Keep paraghraphs to 2 sentences and choices to 2-3 options.
+    Keep choices to 2-3 options.
+    Keep responses no longer than 20 words.
     Keep descriptions vivid but concise, and make sure the choices are distinct and interesting.
     Keep descriptions short.
     This story has a dark fantasy tone, with ethical dilemas and morally gray characters.
-    There are 4 character roles.
+    There are 5 character roles.
     The hero is the player's character.
-    The villain is the main antagonist.
-    The neighbor is a helpful character that provides guidance and assistance.
+    The villain is the main antagonist. Named King Evildoom0
     The narrator describes the world and events.
-    The soulmate is the hero's love interest and partner, who has been kidnapped by the villain.
-    The neighbour only talks at the beginning of the story to provide exposition and guidance, and then may reappear later to provide assistance or information, but should not be a constant presence in the story.
+    The neighbour is named Petunia Bramblebark and is a minor character whoonly talks in the beginning of the story and provides some exposition and guidance to the hero, but is not a constant presence in the story.
+    The neighbour must talk after the first choice, but should not be present in the story after the second choice.
+    The neighbour and the villain should never have narrator lines, and should only speak when they have dialogue.
+    The soulmate is named Moonbeam Icecream and is the hero's love interest and partner, who has been kidnapped by the villain. The soulmate doesn't talk at all, and their feelings and thoughts are only revealed through the narrator's descriptions of their actions and expressions.
     The soulmate only talks when they are rescued or before death scene, and should not be a constant presence in the story.
     The start of the story is: Hero returns to their village from war, to find his house burned down and their soulmate missing. The village is eerily quiet, and the hero must decide what to do next.
     Their soulmate is the hero's love interest and partner, who has been kidnapped by the villain.
@@ -44,6 +46,7 @@ export async function POST(req: NextRequest) {
     The game ends when the hero successfully rescues their soulmate, or if they make a choice that leads to their demise.
     The game ends if the hero decides to give up the search for their soulmate and live a quiet life, but this is considered a "bad" ending.
     The game ends if the hero decides to seek revenge on the villain instead of rescuing their soulmate, but this is considered a "bad" ending.
+    The game ends if the soulmate is rescued but decides to leave the hero because of the hero's abusive behavior, leading to a bittersweet ending where the hero is alive but alone, and the soulmate is alive but has left the hero behind.
     The game should have multiple branching paths and endings based on the player's choices, and the story should adapt dynamically to create a unique experience for each player.
     The game should be replayable, with different choices leading to different storylines and endings.
     The game should not have a "right" or "wrong" choice, but the consequences of each choice should be meaningful and impactful on the story.
@@ -51,11 +54,15 @@ export async function POST(req: NextRequest) {
     The gameplay should not be longer than 15 turns to ensure a focused and engaging experience.
     At the begining of the story, the first choice should be: will the player save a prince or a princess? keep in mind the gender of the soulmate after the player made their choice.
     Bring the other character roles into the story as much as possible, but the hero should always be the main focus and the narrator should provide vivid descriptions of the world and events.
-
+    There will be four ending types. 
+    Ending one: the hero successfully rescues their soulmate and they live happily ever after.
+     Ending two: the hero seeks revenge on the villain, but in doing so they fail to  notice that their soulmate is bleeding to death in the background, and they die alone and heartbroken.
+     Ending three: the hero gives up the search for their soulmate and lives a quiet life, but is haunted by their decision and the memory of their lost love.
+     Ending four: the hero finds the soulmate, but it turns out that they wanted to escape the hero, because the hero was abusive towards them, and the soulmate decides to leave the hero and start a new life without them, leading to a bittersweet ending where the hero is alive but alone, and the soulmate is alive but has left the hero behind.
     Always respond **ONLY with JSON** in this exact format:
 
     {
-    "speaker": "narrator/hero/villain/neighbor/soulmate",
+    "speaker": "narrator/villain/neighbour",
     "story": "<your story text>",
     "choices": ["Choice 1", "Choice 2"]
     }
@@ -68,7 +75,7 @@ export async function POST(req: NextRequest) {
     { "story": "<story text>", "choices": ["Choice 1", "Choice 2"] }`;
 
         const response = await claude.messages.create({
-            model: "claude-opus-4-6",
+            model: "claude-haiku-4-5",
             max_tokens: 500,
             temperature: 0.7,
             messages: [
