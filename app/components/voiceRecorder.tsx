@@ -34,9 +34,9 @@ export default function VoiceRecorder({ onRecordingComplete }: VoiceRecorderProp
     return (
         <div>
             {!recording ? (
-                <button onClick={startRecording} className="px-6 py-3 font-bold text-white uppercase hover:brightness-110 transition-all cursor-pointer active:scale-95" style={{ backgroundColor: "rgba(102, 102, 102, 0.6)", background: "linear-gradient(135deg, rgba(119,119,119,0.6) 0%, rgba(85,85,85,0.6) 50%, rgba(68,68,68,0.6) 100%)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.5)" }}>Record</button>
+                <button onClick={startRecording} className="px-6 py-3 font-bold text-white uppercase hover:brightness-110 transition-all cursor-pointer active:scale-95" style={{ backgroundColor: "rgba(40, 40, 40, 0.5)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6)" }}>Record</button>
             ) : (
-                <button onClick={stopRecording} className="px-6 py-3 font-bold text-white uppercase hover:brightness-110 transition-all cursor-pointer active:scale-95" style={{ backgroundColor: "rgba(102, 102, 102, 0.6)", background: "linear-gradient(135deg, rgba(119,119,119,0.6) 0%, rgba(85,85,85,0.6) 50%, rgba(68,68,68,0.6) 100%)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.5)" }}>Stop</button>
+                <button onClick={stopRecording} className="px-6 py-3 font-bold text-white uppercase hover:brightness-110 transition-all cursor-pointer active:scale-95" style={{ backgroundColor: "rgba(40, 40, 40, 0.5)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6)" }}>Stop</button>
             )}
         </div>
     );

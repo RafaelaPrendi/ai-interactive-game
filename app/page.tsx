@@ -47,7 +47,7 @@ export default function Home() {
     <div className="min-h-screen p-6 text-white flex flex-col items-center" style={{ backgroundImage: "url('gameBG.png')", fontFamily: "'Space Mono', 'Courier New', monospace" }}>
       <h1 className="text-3xl font-bold mt-8 mb-1">You, the Hero</h1>
       <small className="text-center text-yellow-200 mb-4">
-        Let Claude narrate this epic adventure...
+        Let Claude and ElevenLabs narrate this epic adventure...
       </small>
       <div className="flex flex-col gap-4 w-full max-w-6xl mt-8">
 
@@ -75,7 +75,7 @@ export default function Home() {
         <button
           onClick={onRestartGame}
           className="px-6 py-3 font-bold text-white uppercase hover:brightness-110 transition-all cursor-pointer active:scale-95"
-          style={{ backgroundColor: "rgba(102, 102, 102, 0.6)", background: "linear-gradient(135deg, rgba(119,119,119,0.6) 0%, rgba(85,85,85,0.6) 50%, rgba(68,68,68,0.6) 100%)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.5)" }}>Restart Game</button>
+          style={{ backgroundColor: "rgba(40, 40, 40, 0.5)", border: "6px solid #2a2a2a", borderRadius: "0", boxShadow: "inset 0 0 8px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6)" }}>Restart Game</button>
       </div>
       <audio ref={audioRef} src={audioURL || undefined} style={{ display: "none" }} />
     </div>
